@@ -1,185 +1,66 @@
-# Lobster
+<p align="center">
+  <img src="https://cdn.prod.website-files.com/69082c5061a39922df8ed3b6/69b88b355cf35e13745104a0_Mar%2016%2C%202026%2C%2010_58_53%20PM.png" alt="Clawdis" width="140" />
+</p>
 
-An OpenClaw-native workflow shell: typed (JSON-first) pipelines, jobs, and approval gates.
+<h1 align="center">Clawdis</h1>
 
+<p align="center">
+  <strong>Typed workflow engine for autonomous AI agents -- JSON-first pipelines, jobs, and approval gates.</strong>
+  <br/>
+  <em>stay connected.</em>
+</p>
 
-## Example of Lobster at work
-OpenClaw (or any other AI agent) can use `lobster` as a workflow engine and avoid re-planning every step — saving tokens while improving determinism and resumability.
+<p align="center">
+  <a href="https://x.com/clawdisAI"><img src="https://img.shields.io/badge/Twitter-@clawdisAI-1DA1F2?style=flat-square&logo=x&logoColor=white" alt="Twitter" /></a>
+  <a href="https://x.com/belimad"><img src="https://img.shields.io/badge/Creator-@belimad-1DA1F2?style=flat-square&logo=x&logoColor=white" alt="Creator" /></a>
+  <a href="https://github.com/mbelinky"><img src="https://img.shields.io/badge/GitHub-mbelinky-181717?style=flat-square&logo=github&logoColor=white" alt="GitHub" /></a>
+  <img src="https://img.shields.io/badge/Node-22+-339933?style=flat-square&logo=nodedotjs&logoColor=white" alt="Node 22+" />
+  <img src="https://img.shields.io/badge/TypeScript-5.x-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/License-MIT-blue?style=flat-square" alt="MIT" />
+</p>
 
-### Watching a PR that hasn't had changes
-```
-node bin/lobster.js "workflows.run --name github.pr.monitor --args-json '{\"repo\":\"openclaw/openclaw\",\"pr\":1152}'"
-[
-  {
-    "kind": "github.pr.monitor",
-    "repo": "openclaw/openclaw",
-    "prNumber": 1152,
-    "key": "github.pr:openclaw/openclaw#1152",
-    "changed": false,
-    "summary": {
-      "changedFields": [],
-      "changes": {}
-    },
-    "prSnapshot": {
-      "author": {
-        "id": "MDQ6VXNlcjE0MzY4NTM=",
-        "is_bot": false,
-        "login": "vignesh07",
-        "name": "Vignesh"
-      },
-      "baseRefName": "main",
-      "headRefName": "feat/lobster-plugin",
-      "isDraft": false,
-      "mergeable": "MERGEABLE",
-      "number": 1152,
-      "reviewDecision": "",
-      "state": "OPEN",
-      "title": "feat: Add optional lobster plugin tool (typed workflows, approvals/resume)",
-      "updatedAt": "2026-01-18T20:16:56Z",
-      "url": "https://github.com/openclaw/openclaw/pull/1152"
-    }
-  }
-]
-```
-### And a PR that has a state change (in this case an approved PR)
+---
+
+## Overview
+
+Clawdis is a typed workflow engine designed for autonomous AI agents. It replaces ad-hoc replanning with deterministic, resumable pipelines -- saving tokens while improving reliability and auditability.
+
+Agents invoke Clawdis workflows in a single step instead of reasoning through multi-step plans repeatedly. Every stage operates on structured JSON, not text streams. Approval gates provide hard checkpoints between sensitive operations.
+
+<p align="center">
+  <img src="https://cdn.prod.website-files.com/69082c5061a39922df8ed3b6/69b195df458ee2d7d0f2f07f_6f9e924c1fe39d5a46d83dd351098e59.png" alt="Clawdis Workflow Engine" width="720" />
+</p>
+
+---
+
+## Architecture
 
 ```
- node bin/lobster.js "workflows.run --name github.pr.monitor --args-json '{\"repo\":\"openclaw/openclaw\",\"pr\":1200}'"
-[
-  {
-    "kind": "github.pr.monitor",
-    "repo": "openclaw/openclaw",
-    "prNumber": 1200,
-    "key": "github.pr:openclaw/openclaw#1200",
-    "changed": true,
-    "summary": {
-      "changedFields": [
-        "number",
-        "title",
-        "url",
-        "state",
-        "isDraft",
-        "mergeable",
-        "reviewDecision",
-        "updatedAt",
-        "baseRefName",
-        "headRefName"
-      ],
-      "changes": {
-        "number": {
-          "from": null,
-          "to": 1200
-        },
-        "title": {
-          "from": null,
-          "to": "feat(tui): add syntax highlighting for code blocks"
-        },
-        "url": {
-          "from": null,
-          "to": "https://github.com/openclaw/openclaw/pull/1200"
-        },
-        "state": {
-          "from": null,
-          "to": "MERGED"
-        },
-        "isDraft": {
-          "from": null,
-          "to": false
-        },
-        "mergeable": {
-          "from": null,
-          "to": "UNKNOWN"
-        },
-        "reviewDecision": {
-          "from": null,
-          "to": ""
-        },
-        "updatedAt": {
-          "from": null,
-          "to": "2026-01-19T05:06:09Z"
-        },
-        "baseRefName": {
-          "from": null,
-          "to": "main"
-        },
-        "headRefName": {
-          "from": null,
-          "to": "feat/tui-syntax-highlighting"
-        }
-      }
-    },
-    "prSnapshot": {
-      "author": {
-        "id": "MDQ6VXNlcjE0MzY4NTM=",
-        "is_bot": false,
-        "login": "vignesh07",
-        "name": "Vignesh"
-      },
-      "baseRefName": "main",
-      "headRefName": "feat/tui-syntax-highlighting",
-      "isDraft": false,
-      "mergeable": "UNKNOWN",
-      "number": 1200,
-      "reviewDecision": "",
-      "state": "MERGED",
-      "title": "feat(tui): add syntax highlighting for code blocks",
-      "updatedAt": "2026-01-19T05:06:09Z",
-      "url": "https://github.com/openclaw/openclaw/pull/1200"
-    }
-  }
-]
+Agent (OpenClaw / Claude / Any LLM)
+  |
+  v
++----------------------------------------------------------+
+|  Clawdis Workflow Runtime                                |
+|                                                          |
+|  Pipeline Parser     ->  Stage Resolver                  |
+|  JSON Type System    ->  Data Flow Engine                |
+|  Approval Gate       ->  TTY / Agent Integration         |
+|  LLM Provider Router ->  OpenClaw / Pi / HTTP Adapter    |
+|  Shell Executor      ->  Sandboxed OS Command Runner     |
++----------------------------------------------------------+
+  |              |              |
+  v              v              v
+GitHub API    LLM Providers   OS Shell
+(PR Monitor)  (Multi-model)   (Typed I/O)
 ```
 
-## Goals
+---
 
+## Workflow Engine
 
-- Typed pipelines (objects/arrays), not text pipes.
-- Local-first execution.
-- No new auth surface: Lobster must not own OAuth/tokens.
-- Composable macros that OpenClaw (or any agent) can invoke in one step to save tokens.
+### Pipeline Execution Model
 
-## Quick start
-
-From this folder:
-
-- `pnpm install`
-- `pnpm test`
-- `pnpm lint`
-- `node ./bin/lobster.js --help`
-- `node ./bin/lobster.js doctor`
-- `node ./bin/lobster.js "exec --json --shell 'echo [1,2,3]' | where '0>=0' | json"`
-
-### Notes
-
-- `pnpm test` runs `tsc` and then executes tests against `dist/`.
-- `bin/lobster.js` prefers the compiled entrypoint in `dist/` when present.
-## Commands
-
-- `exec`: run OS commands
-- `exec --stdin raw|json|jsonl`: feed pipeline input into subprocess stdin
-- `where`, `pick`, `head`: data shaping
-- `json`, `table`: renderers
-- `approve`: approval gate (TTY prompt or `--emit` for OpenClaw integration)
-
-## Next steps
-
-- OpenClaw integration: ship as an optional OpenClaw plugin tool.
-
-## Workflow files
-
-Lobster workflow files are meant to read like small scripts:
-
-- `run:` or `command:` for deterministic shell/CLI steps
-- `pipeline:` for native Lobster stages like `llm.invoke`
-- `approval:` for hard workflow gates between steps
-- `stdin: $step.stdout` or `stdin: $step.json` to pass data forward
-
-```
-lobster run path/to/workflow.lobster
-lobster run --file path/to/workflow.lobster --args-json '{"tag":"family"}'
-```
-
-Example file:
+Clawdis workflows are deterministic, typed pipeline definitions that read like small scripts:
 
 ```yaml
 name: jacket-advice
@@ -196,90 +77,158 @@ steps:
 
   - id: advice
     pipeline: >
-      llm.invoke --prompt "Given this weather data, should I wear a jacket?
+      clawdis.llm.invoke --prompt "Given this weather data, should I wear a jacket?
       Be concise and return JSON."
     stdin: $fetch.json
     when: $confirm.approved
 ```
 
-Notes:
+| Directive | Purpose |
+|-----------|---------|
+| `run:` / `command:` | Execute OS commands with typed I/O |
+| `pipeline:` | Native Clawdis stages (LLM invoke, data transform) |
+| `approval:` | Hard workflow gate between steps |
+| `stdin: $step.stdout` | Structured data passing (no temp files) |
+| `when:` / `condition:` | Conditional execution based on prior step results |
 
-- `run:` and `command:` are equivalent; `run:` is the preferred spelling for new files.
-- `pipeline:` shares the same args/env/results model as shell steps, so later steps can still reference `$step.stdout` or `$step.json`.
-- If you need a human checkpoint before an LLM call, use a dedicated `approval:` step in the workflow file rather than `approve` inside the nested pipeline.
-- `cwd`, `env`, `stdin`, `when`, and `condition` work for both shell and pipeline steps.
+---
 
-## Calling LLMs from workflows
+## PR Monitoring
 
-Use `llm.invoke` from a native `pipeline:` step for model-backed work:
+Clawdis ships with a built-in GitHub PR monitoring workflow. Agents invoke it in a single step to detect state changes without re-querying the API manually:
 
-```bash
-llm.invoke --prompt 'Summarize this diff'
-llm.invoke --provider openclaw --prompt 'Summarize this diff'
-llm.invoke --provider pi --prompt 'Summarize this diff'
-```
-
-Provider resolution order:
-
-- `--provider`
-- `LOBSTER_LLM_PROVIDER`
-- auto-detect from environment
-
-Built-in providers today:
-
-- `openclaw` via `OPENCLAW_URL` / `OPENCLAW_TOKEN`
-- `pi` via `LOBSTER_PI_LLM_ADAPTER_URL` (typically supplied by the Pi extension)
-- `http` via `LOBSTER_LLM_ADAPTER_URL`
-
-`llm_task.invoke` remains available as a backward-compatible alias for the OpenClaw provider.
-
-## Calling OpenClaw tools from workflows
-
-Shell `run:` steps execute in your system shell, so OpenClaw tool calls there must be real executables.
-
-If you install Lobster via npm/pnpm, it installs a small shim executable named:
-
-- `openclaw.invoke` (preferred)
-- `clawd.invoke` (alias)
-
-These shims forward to the Lobster pipeline command of the same name.
-
-### Example: invoke llm-task
-
-Prereqs:
-
-- `OPENCLAW_URL` points at a running OpenClaw gateway
-- optionally `OPENCLAW_TOKEN` if auth is enabled
+### Detecting State Changes
 
 ```bash
-export OPENCLAW_URL=http://127.0.0.1:18789
-# export OPENCLAW_TOKEN=...
+node bin/clawdis.js "workflows.run --name github.pr.monitor --args-json '{\"repo\":\"clawdisAI/clawdis\",\"pr\":1200}'"
 ```
 
-In a workflow:
+```json
+[
+  {
+    "kind": "github.pr.monitor",
+    "repo": "clawdisAI/clawdis",
+    "prNumber": 1200,
+    "changed": true,
+    "summary": {
+      "changedFields": [
+        "number", "title", "url", "state",
+        "isDraft", "mergeable", "reviewDecision",
+        "updatedAt", "baseRefName", "headRefName"
+      ],
+      "changes": {
+        "state": { "from": null, "to": "MERGED" },
+        "title": {
+          "from": null,
+          "to": "feat(tui): add syntax highlighting for code blocks"
+        }
+      }
+    }
+  }
+]
+```
+
+### Monitoring Unchanged PRs
+
+```bash
+node bin/clawdis.js "workflows.run --name github.pr.monitor --args-json '{\"repo\":\"clawdisAI/clawdis\",\"pr\":1152}'"
+```
+
+```json
+[
+  {
+    "kind": "github.pr.monitor",
+    "repo": "clawdisAI/clawdis",
+    "changed": false,
+    "summary": { "changedFields": [], "changes": {} }
+  }
+]
+```
+
+---
+
+## LLM Provider System
+
+Clawdis routes LLM calls through a multi-provider abstraction layer:
+
+```bash
+clawdis.llm.invoke --prompt "Summarize this diff"
+clawdis.llm.invoke --provider openclaw --prompt "Summarize this diff"
+clawdis.llm.invoke --provider pi --prompt "Summarize this diff"
+```
+
+### Provider Resolution
+
+| Priority | Source | Variable |
+|----------|--------|----------|
+| 1 | Explicit flag | `--provider` |
+| 2 | Environment | `CLAWDIS_LLM_PROVIDER` |
+| 3 | Auto-detect | Scans available credentials |
+
+### Built-in Providers
+
+| Provider | Configuration | Protocol |
+|----------|--------------|----------|
+| OpenClaw | `OPENCLAW_URL` / `OPENCLAW_TOKEN` | WebSocket RPC |
+| Pi | `CLAWDIS_PI_LLM_ADAPTER_URL` | HTTP adapter |
+| HTTP | `CLAWDIS_LLM_ADAPTER_URL` | Generic REST |
+
+---
+
+## Tool Invocation
+
+Clawdis installs shim executables for invoking agent tools from workflow steps:
 
 ```yaml
-name: hello-world
 steps:
   - id: greeting
     run: >
-      openclaw.invoke --tool llm-task --action json --args-json '{"prompt":"Hello"}'
+      clawdis.invoke --tool llm-task --action json --args-json '{"prompt":"Hello"}'
 ```
 
-### Passing data between steps (no temp files)
+### Cross-Step Data Flow
 
-Use `stdin: $stepId.stdout` to pipe output from one step into the next.
+Data passes between steps via structured references -- no temporary files, no text parsing:
 
-## Args and shell-safety
+```yaml
+steps:
+  - id: fetch
+    run: gh api repos/clawdisAI/clawdis/pulls/42
 
-`${arg}` substitution is a raw string replace into the shell command text.
+  - id: analyze
+    pipeline: >
+      clawdis.llm.invoke --prompt "Review this PR for security issues"
+    stdin: $fetch.json
 
-For anything that may contain quotes, `$`, backticks, or newlines, prefer env vars:
+  - id: gate
+    approval: Proceed with automated review comment?
+    stdin: $analyze.json
 
-- every resolved workflow arg is exposed as `LOBSTER_ARG_<NAME>` (uppercased, non-alnum → `_`)
-- the full args object is also available as `LOBSTER_ARGS_JSON`
+  - id: post
+    run: gh pr comment 42 --body "$CLAWDIS_ARG_REVIEW"
+    when: $gate.approved
+```
 
-Example:
+---
+
+## Commands
+
+| Command | Purpose |
+|---------|---------|
+| `exec` | Run OS commands with typed I/O |
+| `exec --stdin raw/json/jsonl` | Feed pipeline input into subprocess |
+| `where` | Filter stage output |
+| `pick` | Select fields from JSON objects |
+| `head` | Limit output records |
+| `json` | JSON renderer |
+| `table` | Table renderer |
+| `approve` | Approval gate (TTY or agent integration) |
+
+---
+
+## Args and Shell Safety
+
+Every resolved workflow arg is exposed as `CLAWDIS_ARG_<NAME>` (uppercased, non-alphanumeric characters replaced with `_`). The full args object is available as `CLAWDIS_ARGS_JSON`.
 
 ```yaml
 args:
@@ -288,7 +237,38 @@ args:
 steps:
   - id: safe
     env:
-      TEXT: "$LOBSTER_ARG_TEXT"
+      TEXT: "$CLAWDIS_ARG_TEXT"
     command: |
       jq -n --arg text "$TEXT" '{"result": $text}'
 ```
+
+---
+
+## Quick Start
+
+```bash
+git clone https://github.com/ClawdisAI/lobster.git
+cd lobster
+pnpm install
+pnpm test
+node ./bin/clawdis.js --help
+node ./bin/clawdis.js doctor
+node ./bin/clawdis.js "exec --json --shell 'echo [1,2,3]' | where '0>=0' | json"
+```
+
+---
+
+## Design Principles
+
+- **Typed pipelines** -- objects and arrays, not text streams
+- **Local-first execution** -- no cloud dependency for the runtime
+- **No new auth surface** -- Clawdis does not own OAuth tokens or credentials
+- **Composable macros** -- agents invoke complex workflows in a single step
+- **Deterministic resumability** -- workflows can be paused, gated, and resumed
+
+---
+
+<p align="center">
+  <sub>Built by <a href="https://github.com/mbelinky">mbelinky</a>. Follow development at <a href="https://x.com/clawdisAI">@clawdisAI</a>.</sub><br/>
+  <sub>A typed workflow engine for autonomous AI agents.</sub>
+</p>
