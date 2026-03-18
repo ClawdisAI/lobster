@@ -28,7 +28,7 @@ Clawdis is a typed workflow engine designed for autonomous AI agents. It replace
 Agents invoke Clawdis workflows in a single step instead of reasoning through multi-step plans repeatedly. Every stage operates on structured JSON, not text streams. Approval gates provide hard checkpoints between sensitive operations.
 
 <p align="center">
-  <img src="https://cdn.prod.website-files.com/69082c5061a39922df8ed3b6/69b195df458ee2d7d0f2f07f_6f9e924c1fe39d5a46d83dd351098e59.png" alt="Clawdis Workflow Engine" width="720" />
+  <img src="https://cdn.prod.website-files.com/69082c5061a39922df8ed3b6/69bb04e45f943305e7fb5964_New%20Project%20-%202026-03-16T234838.962.png" alt="Clawdis Workflow Engine" width="720" />
 </p>
 
 ---
